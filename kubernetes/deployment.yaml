@@ -3,6 +3,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: command-runner
+  labels:
+    istio-injection: enabled
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -20,7 +22,7 @@ spec:
         app: command-runner
     spec:
       containers:
-      - name: operator
+      - name: command-runner
         image: ghcr.io/btjimerson/command-runner:latest
         imagePullPolicy: Always
         ports:
