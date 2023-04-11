@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: command-runner-lb
+  namespace: command-runner
+  labels:
+    app: command-runner-lb
+    service: command-runner-lb
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: http
+  selector:
+    app: command-runner
