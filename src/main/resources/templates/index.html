@@ -10,7 +10,7 @@
 
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/application.css" rel="stylesheet" />
-    <link rel="icon" href="images/favicon-64.png" />
+    <link rel="icon" href="/images/favicon-64.png" />
 
     <script>
         function setCommand(command) {
@@ -21,9 +21,10 @@
 
 <body>
     <div class="col-lg-8 mx-auto p-3 py-md-5">
-        <header class="align-items-center border-bottom pb-3 mb-5">
-            <a href="/" class="align-items-center text-dark text-decoration-none">
-                <img class="d-block" src="/images/aspenmesh.png" width="200" />
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <img src="/images/command-line.png" width="120">
+                <div class="fs-1 text-dark">Command Runner</div>
             </a>
         </header>
 
@@ -49,7 +50,8 @@
                 </div>
             </div>
             <div class="container">
-                <h1>Command Runner</h1>
+                <div class="fs-4">Enter a command to run</div>
+                <div class="fs-6"><em>Do not enter long running processes</em></div>
                 <div class="row pt-5">
                     <div class="col-md-8">
                         <form method="post" th:action="@{/execute}" th:object="${command}" id="commandForm">
@@ -101,7 +103,7 @@
         </main>
 
         <footer class="pt-5 my-5 text-muted border-top">
-            Aspen Mesh &middot; &copy; 2022
+            Brian Jimerson &middot; &copy; 2023
         </footer>
     </div>
 
