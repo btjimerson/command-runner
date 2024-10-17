@@ -1,11 +1,16 @@
-FROM eclipse-temurin:17
-RUN apt-get update
-RUN apt-get install -y net-tools dnsutils telnet iputils-ping traceroute ca-certificates curl jq
-RUN curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-RUN echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
-RUN apt-get update
-RUN apt-get install -y kubectl
+FROM maven:3.8.7-eclipse-temurin-19 AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package -DskipTests
+
+FROM eclipse-temurin:19-jammy
+RUN apt update
+RUN apt install -y net-tools dnsutils telnet iputils-ping traceroute ca-certificates curl jq
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+RUN chmod +x kubectl
+RUN mv kubectl /usr/local/bin
 WORKDIR /opt
 EXPOSE 8080
-COPY target/*.jar /opt/app.jar
+COPY --from=build /home/app/target/*.jar /opt/app.jar
 CMD java -jar /opt/app.jar
+

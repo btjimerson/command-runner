@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: command-runner
-        image: ghcr.io/btjimerson/command-runner:latest
+        image: btjimerson/command-runner:0.1.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
