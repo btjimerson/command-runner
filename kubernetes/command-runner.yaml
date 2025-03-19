@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: command-runner
-        image: btjimerson/command-runner:0.1.0
+        image: btjimerson/command-runner:0.2.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
