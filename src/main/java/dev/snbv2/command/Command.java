@@ -12,4 +12,7 @@ public class Command {
         this.command = command;
     }
     
+    public String[] getCommandAsArray() {
+        return command.split(" ");
+    }
 }

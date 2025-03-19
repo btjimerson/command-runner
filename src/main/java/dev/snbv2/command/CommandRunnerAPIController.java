@@ -24,7 +24,7 @@ public class CommandRunnerAPIController {
         StringBuilder sb = new StringBuilder();
         
         try {
-            process = Runtime.getRuntime().exec(command.getCommand());
+            process = Runtime.getRuntime().exec(command.getCommandAsArray());
             BufferedReader reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
             
