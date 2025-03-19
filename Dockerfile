@@ -12,5 +12,5 @@ RUN mv kubectl /usr/local/bin
 WORKDIR /opt
 EXPOSE 8080
 COPY --from=build /home/app/target/*.jar /opt/app.jar
-CMD java -jar /opt/app.jar
+CMD ["java", "-jar", "/opt/app.jar"]
 
