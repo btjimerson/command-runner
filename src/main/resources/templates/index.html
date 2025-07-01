@@ -1,0 +1,123 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="theme-color" content="#7952b3">
+    <title>Command Runner</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/application.css" rel="stylesheet" />
+    <link rel="icon" href="/images/favicon-64.png" />
+
+    <script>
+        function setCommand(command) {
+            document.getElementById("command").value = command;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="col-lg-8 mx-auto p-3 py-md-5">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <img src="/images/command-line.png" width="120">
+                <div class="fs-1 text-dark">Command Runner</div>
+            </a>
+        </header>
+
+        <main>
+            <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="historyModalLabel">Full History</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul th:if="${session.commandHistory.history.size() > 0}">
+                                <li th:each="history, status: ${session.commandHistory.history}">
+                                    <a href="#" th:attr="onclick=|setCommand('${history}')|" th:text="${history}"
+                                        data-bs-dismiss="modal"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="fs-4">Enter a command to run</div>
+                <div class="fs-6"><em>Do not enter long running processes</em></div>
+                <div class="row pt-5">
+                    <div class="col-md-8">
+                        <form method="post" th:action="@{/execute}" th:object="${command}" id="commandForm">
+                            <textarea class="form-control" style="font-family: monospace" id="command" rows="3"
+                                th:field="*{command}" placeholder="Command to run"></textarea>
+                            <div class="pt-5">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block px-4" id="commandButton" onclick="showSpinner()">
+                                    <span id="spinner" class="spinner-border spinner-border-sm" role="status" style="display: none;" aria-hidden="true"></span>
+                                    Run Command</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col border-start ps-3 ms-4" th:if="${session.commandHistory.history.size() gt 0}">
+                        <h3>Command History</h3>
+                        <ul>
+                            <li th:each="history, status: ${session.commandHistory.history}"
+                                th:if="${status.count le 10}">
+                                <a href="#" th:attr="onclick=|setCommand('${history}')|" th:text="${history}"></a>
+                            </li>
+                        </ul>
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#historyModal" th:if="${session.commandHistory.history.size() gt 10}">
+                            View Full History
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="my-5" th:if="${result}"/>
+
+                <div class="row" th:if="${result}">
+                    <div class="col">
+                        <h2>Result</h2>
+                        <div class="highlight">
+                            <pre><code th:text="${result}"></code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5" th:if="${error}"/>
+
+                <div class="row" th:if="${error}">
+                    <div class="col">
+                        <h2>Error Running Command</h2>
+                        <div class="highlight">
+                            <pre><code th:text="${error}"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="pt-5 my-5 text-muted border-top">
+            <span class="text-muted">&copy; <span th:text="${#dates.year(#dates.createNow())}"></span> Brian Jimerson</span>
+        </footer>
+    </div>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+        function showSpinner() {
+            document.getElementById("spinner").style.display = "";
+            document.getElementById("commandButton").disabled = true;
+            document.getElementById("commandForm").submit();
+        }
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: command-runner
+  namespace: command-runner
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: command-runner
+  namespace: command-runner
+  labels:
+    app: command-runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: command-runner
+  template:
+    metadata:
+      labels:
+        app: command-runner
+    spec:
+      serviceAccountName: command-runner
+      containers:
+      - name: command-runner
+        image: ghcr.io/btjimerson/command-runner:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: command-runner
+  namespace: command-runner
+  labels:
+    app: command-runner
+    service: command-runner
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: command-runner
