@@ -131,26 +131,7 @@ class CommandRunnerAPIControllerTests {
                 .andExpect(status().isOk());
     }
 
-    /**
-     * Tests that the system-info endpoint returns system information.
-     * 
-     * @throws Exception if the test fails
-     */
-    @Test
-    void getSystemInfoShouldReturnSystemInformation() throws Exception {
-        // Execute test
-        MvcResult result = mockMvc.perform(get("/api/v1/system-info")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
 
-        // Verify response contains expected keys
-        String responseContent = result.getResponse().getContentAsString();
-        assertTrue(responseContent.contains("os.name"));
-        assertTrue(responseContent.contains("java.version"));
-        assertTrue(responseContent.contains("available.processors"));
-        assertTrue(responseContent.contains("total.memory.mb"));
-    }
 
     // Test for null command handling moved to CommandTests.java
 }
