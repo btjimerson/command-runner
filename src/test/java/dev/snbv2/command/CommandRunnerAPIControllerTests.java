@@ -10,7 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
@@ -42,13 +42,7 @@ class CommandRunnerAPIControllerTests {
     @Mock
     private Process process;
 
-    /**
-     * Setup method that runs before each test.
-     */
-    @BeforeEach
-    void setUp() {
-        // Setup code if needed
-    }
+
 
     /**
      * Tests that the execute endpoint successfully runs a command and returns its
@@ -130,8 +124,6 @@ class CommandRunnerAPIControllerTests {
                 .content(objectMapper.writeValueAsString(command)))
                 .andExpect(status().isOk());
     }
-
-
 
     // Test for null command handling moved to CommandTests.java
 }
