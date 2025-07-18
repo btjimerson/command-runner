@@ -3,9 +3,13 @@ package dev.snbv2.command;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommandRunnerAPIController {
 
     private static final Log LOG = LogFactory.getLog(CommandRunnerAPIController.class);
+    
+    @Value("${application.version:unknown}")
+    private String applicationVersion;
 
     /**
      * Executes a shell command received via HTTP POST request.
@@ -60,4 +67,19 @@ public class CommandRunnerAPIController {
         return result;
     }
 
+    /**
+     * Returns the current version of the application.
+     * This endpoint is useful for demonstrating traffic splitting in Istio.
+     * 
+     * @return A map containing the application version
+     */
+    @GetMapping("/version")
+    public Map<String, String> getVersion() {
+        Map<String, String> versionInfo = new HashMap<>();
+        versionInfo.put("version", applicationVersion);
+        
+        LOG.debug("Version information requested: " + applicationVersion);
+        
+        return versionInfo;
+    }
 }
