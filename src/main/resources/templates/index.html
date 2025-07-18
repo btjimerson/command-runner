@@ -22,14 +22,19 @@
 <body>
     <div class="col-lg-8 mx-auto p-3 py-md-5">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <a href="/"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                 <img src="/images/command-line.png" width="120">
-                <div class="fs-1 text-dark">Command Runner</div>
+                <div>
+                    <div class="fs-1 text-dark">Command Runner</div>
+                    <div class="fs-6 text-muted">Version: <span th:text="${version}">unknown</span></div>
+                </div>
             </a>
         </header>
 
         <main>
-            <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+            <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -58,8 +63,10 @@
                             <textarea class="form-control" style="font-family: monospace" id="command" rows="3"
                                 th:field="*{command}" placeholder="Command to run"></textarea>
                             <div class="pt-5">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block px-4" id="commandButton" onclick="showSpinner()">
-                                    <span id="spinner" class="spinner-border spinner-border-sm" role="status" style="display: none;" aria-hidden="true"></span>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block px-4" id="commandButton"
+                                    onclick="showSpinner()">
+                                    <span id="spinner" class="spinner-border spinner-border-sm" role="status"
+                                        style="display: none;" aria-hidden="true"></span>
                                     Run Command</button>
                             </div>
                         </form>
@@ -72,13 +79,14 @@
                                 <a href="#" th:attr="onclick=|setCommand('${history}')|" th:text="${history}"></a>
                             </li>
                         </ul>
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#historyModal" th:if="${session.commandHistory.history.size() gt 10}">
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#historyModal" th:if="${session.commandHistory.history.size() gt 10}">
                             View Full History
                         </button>
                     </div>
                 </div>
 
-                <hr class="my-5" th:if="${result}"/>
+                <hr class="my-5" th:if="${result}" />
 
                 <div class="row" th:if="${result}">
                     <div class="col">
@@ -89,7 +97,7 @@
                     </div>
                 </div>
 
-                <hr class="my-5" th:if="${error}"/>
+                <hr class="my-5" th:if="${error}" />
 
                 <div class="row" th:if="${error}">
                     <div class="col">
@@ -103,7 +111,10 @@
         </main>
 
         <footer class="pt-5 my-5 text-muted border-top">
-            <span class="text-muted">&copy; <span th:text="${#dates.year(#dates.createNow())}"></span> Brian Jimerson</span>
+            <div class="d-flex justify-content-between">
+                <span class="text-muted">&copy; <span th:text="${#dates.year(#dates.createNow())}"></span> Brian
+                    Jimerson</span>
+            </div>
         </footer>
     </div>
 
@@ -116,7 +127,7 @@
             document.getElementById("commandForm").submit();
         }
 
-</script>
+    </script>
 
 </body>
 
