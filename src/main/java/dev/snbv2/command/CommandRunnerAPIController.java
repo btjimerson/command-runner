@@ -11,12 +11,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST API controller for executing shell commands.
+ * Provides endpoints for command execution via HTTP requests.
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class CommandRunnerAPIController {
 
     private static final Log LOG = LogFactory.getLog(CommandRunnerAPIController.class);
 
+    /**
+     * Executes a shell command received via HTTP POST request.
+     * 
+     * @param command The command object containing the command to execute
+     * @return The output of the command as a string, or an error message if execution fails
+     */
     @PostMapping(path = ("/command"))
     public String execute(@RequestBody Command command) {
 

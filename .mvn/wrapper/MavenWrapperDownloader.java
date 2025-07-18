@@ -18,9 +18,18 @@ import java.io.*;
 import java.nio.channels.*;
 import java.util.Properties;
 
+/**
+ * Utility class for downloading the Maven Wrapper jar file.
+ * This class is responsible for downloading the Maven Wrapper jar file
+ * from a remote repository if it doesn't exist locally.
+ */
 public class MavenWrapperDownloader {
 
+    /**
+     * The version of the Maven Wrapper to download.
+     */
     private static final String WRAPPER_VERSION = "0.5.6";
+    
     /**
      * Default URL to download the maven-wrapper.jar from, if no 'downloadUrl' is provided.
      */
@@ -45,6 +54,11 @@ public class MavenWrapperDownloader {
      */
     private static final String PROPERTY_NAME_WRAPPER_URL = "wrapperUrl";
 
+    /**
+     * Main method that downloads the Maven Wrapper jar file.
+     * 
+     * @param args Command line arguments, where args[0] is the base directory
+     */
     public static void main(String args[]) {
         System.out.println("- Downloader started");
         File baseDirectory = new File(args[0]);
@@ -94,6 +108,14 @@ public class MavenWrapperDownloader {
         }
     }
 
+    /**
+     * Downloads a file from a URL to a local destination file.
+     * Supports basic authentication if MVNW_USERNAME and MVNW_PASSWORD environment variables are set.
+     * 
+     * @param urlString The URL to download from
+     * @param destination The local file to save the downloaded content to
+     * @throws Exception If any error occurs during the download process
+     */
     private static void downloadFileFromURL(String urlString, File destination) throws Exception {
         if (System.getenv("MVNW_USERNAME") != null && System.getenv("MVNW_PASSWORD") != null) {
             String username = System.getenv("MVNW_USERNAME");

@@ -14,12 +14,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+/**
+ * Web controller for the command runner application.
+ * Handles web requests for the UI, manages command execution and history.
+ */
 @Controller
 public class CommandRunnerController {
 
     private static final Log LOG = LogFactory.getLog(CommandRunnerController.class);
 
-    @GetMapping(path={"/","/index"})
+    /**
+     * Displays the index page with a command form.
+     * Initializes command history in the session if not already present.
+     * 
+     * @param model The Spring MVC model
+     * @param session The HTTP session
+     * @return The name of the view to render
+     */
+    @GetMapping(path = { "/", "/index" })
     public String index(Model model, HttpSession session) {
         Command command = new Command();
         model.addAttribute("command", command);
@@ -30,7 +42,16 @@ public class CommandRunnerController {
         return "index";
     }
 
-    @PostMapping(path=("/execute"))
+    /**
+     * Executes a command submitted from the web form.
+     * Adds the command to the history and displays the result.
+     * 
+     * @param command The command to execute
+     * @param model The Spring MVC model
+     * @param session The HTTP session
+     * @return The name of the view to render
+     */
+    @PostMapping(path = ("/execute"))
     public String execute(@ModelAttribute Command command, Model model, HttpSession session) {
 
         Process process;
@@ -43,12 +64,12 @@ public class CommandRunnerController {
         CommandHistory commandHistory = (CommandHistory) session.getAttribute("commandHistory");
 
         commandHistory.addHistory(command.getCommand());
-        
+
         try {
             process = Runtime.getRuntime().exec(command.getCommandAsArray());
             BufferedReader reader = new BufferedReader(
-                new InputStreamReader(process.getInputStream()));
-            
+                    new InputStreamReader(process.getInputStream()));
+
             String line = "";
 
             while ((line = reader.readLine()) != null) {
@@ -60,14 +81,14 @@ public class CommandRunnerController {
             e.printStackTrace();
             return "index";
         }
-       
+
         String result = sb.toString();
 
         LOG.debug(String.format(
-            "Result of command [%s] = [%s]", 
-            command.getCommand(), 
-            result));
-        
+                "Result of command [%s] = [%s]",
+                command.getCommand(),
+                result));
+
         model.addAttribute("result", result);
         return "index";
     }
