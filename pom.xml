@@ -12,7 +12,7 @@
     
     <groupId>dev.snbv2</groupId>
     <artifactId>command-runner</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <name>command-runner</name>
     <description>Executes shell commands</description>
 
