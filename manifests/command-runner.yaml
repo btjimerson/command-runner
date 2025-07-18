@@ -3,13 +3,13 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: command-runner
-  namespace: command-runner
+  namespace: command-runner-2
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: command-runner
-  namespace: command-runner
+  namespace: command-runner-2
   labels:
     app: command-runner
 spec:
@@ -25,7 +25,7 @@ spec:
       serviceAccountName: command-runner
       containers:
       - name: command-runner
-        image: ghcr.io/btjimerson/command-runner:latest
+        image: ghcr.io/btjimerson/command-runner:0.1.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -34,7 +34,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: command-runner
-  namespace: command-runner
+  namespace: command-runner-2
   labels:
     app: command-runner
     service: command-runner

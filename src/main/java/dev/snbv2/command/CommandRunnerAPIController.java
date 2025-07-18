@@ -17,17 +17,17 @@ public class CommandRunnerAPIController {
 
     private static final Log LOG = LogFactory.getLog(CommandRunnerAPIController.class);
 
-    @PostMapping(path=("/command"))
+    @PostMapping(path = ("/command"))
     public String execute(@RequestBody Command command) {
 
         Process process;
         StringBuilder sb = new StringBuilder();
-        
+
         try {
             process = Runtime.getRuntime().exec(command.getCommandAsArray());
             BufferedReader reader = new BufferedReader(
-                new InputStreamReader(process.getInputStream()));
-            
+                    new InputStreamReader(process.getInputStream()));
+
             String line = "";
 
             while ((line = reader.readLine()) != null) {
@@ -38,15 +38,15 @@ public class CommandRunnerAPIController {
             e.printStackTrace();
             return e.getMessage();
         }
-       
+
         String result = sb.toString();
 
         LOG.debug(String.format(
-            "Result of command [%s] = [%s]", 
-            command.getCommand(), 
-            result));
-        
+                "Result of command [%s] = [%s]",
+                command.getCommand(),
+                result));
+
         return result;
     }
-    
+
 }
