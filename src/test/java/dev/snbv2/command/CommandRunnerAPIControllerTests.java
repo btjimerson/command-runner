@@ -51,7 +51,8 @@ class CommandRunnerAPIControllerTests {
     }
 
     /**
-     * Tests that the execute endpoint successfully runs a command and returns its output.
+     * Tests that the execute endpoint successfully runs a command and returns its
+     * output.
      * 
      * @throws Exception if the test fails
      */
@@ -83,7 +84,8 @@ class CommandRunnerAPIControllerTests {
     }
 
     /**
-     * Tests that the execute endpoint properly handles IOExceptions by returning the error message.
+     * Tests that the execute endpoint properly handles IOExceptions by returning
+     * the error message.
      * 
      * @throws Exception if the test fails
      */
@@ -128,7 +130,7 @@ class CommandRunnerAPIControllerTests {
                 .content(objectMapper.writeValueAsString(command)))
                 .andExpect(status().isOk());
     }
-    
+
     /**
      * Tests that the system-info endpoint returns system information.
      * 
@@ -141,7 +143,7 @@ class CommandRunnerAPIControllerTests {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
-        
+
         // Verify response contains expected keys
         String responseContent = result.getResponse().getContentAsString();
         assertTrue(responseContent.contains("os.name"));
