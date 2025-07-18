@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class CommandRunnerController {
 
     private static final Log LOG = LogFactory.getLog(CommandRunnerController.class);
+    
+    @Value("${application.version:unknown}")
+    private String applicationVersion;
 
     /**
      * Displays the index page with a command form.
@@ -35,6 +39,7 @@ public class CommandRunnerController {
     public String index(Model model, HttpSession session) {
         Command command = new Command();
         model.addAttribute("command", command);
+        model.addAttribute("version", applicationVersion);
         if (session.getAttribute("commandHistory") == null) {
             session.setAttribute("commandHistory", new CommandHistory());
         }
@@ -90,6 +95,7 @@ public class CommandRunnerController {
                 result));
 
         model.addAttribute("result", result);
+        model.addAttribute("version", applicationVersion);
         return "index";
     }
 
