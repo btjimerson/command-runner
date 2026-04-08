@@ -35,5 +35,5 @@ mvn spring-boot:run
 There is a simple REST API endpoint for running commands too. You can pass a single command to run in the body, like this:
 
 ```bash
-curl --location --request POST "http://localhost:8080/api/v1/command" -H "Content-Type: application/json" --data-raw '{"command": "dig www.google.com"} 
+curl --location --request POST "http://localhost:8080/api/v1/command" -H "Content-Type: application/json" --data-raw '{"command": "dig www.google.com"}'
 ```
